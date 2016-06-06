@@ -25,12 +25,16 @@ public class MainActivity extends ActionBarActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-      //  displayPrice(numberOfCoffees * 5);
-      //String priceMessage = "Free";
-      //displayMessage(priceMessage);
-      int price=5;
-      String priceMessage = "Total:" + numberOfCoffees + " Coffees x " + price + "$ =" + numberOfCoffees*price;
-      displayMessage(priceMessage);
+        //  displayPrice(numberOfCoffees * 5);
+        //String priceMessage = "Free";
+        //displayMessage(priceMessage);
+        int price = 5;
+        int totalPrice = calculatePrice(numberOfCoffees, price);
+
+        String Message= createOrderSummary(numberOfCoffees,totalPrice);
+
+        displayMessage(Message);
+
     }
 
     /**
@@ -38,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
      */
     public void incrementOrder(View view) {
         numberOfCoffees++;
-        display(numberOfCoffees);
+        displayQuantity(numberOfCoffees);
     }
 
 
@@ -46,9 +50,9 @@ public class MainActivity extends ActionBarActivity {
      * This method is called when the order button is clicked.
      */
     public void decrementOrder(View view) {
-        if (numberOfCoffees>0)
+        if (numberOfCoffees > 0)
             numberOfCoffees--;
-        display(numberOfCoffees);
+        displayQuantity(numberOfCoffees);
 
     }
 
@@ -56,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * This method displays the given quantity value on the screen.
      */
-    private void display(int number) {
+    private void displayQuantity(int number) {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
         quantityTextView.setText("" + number);
@@ -66,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
      * This method displays the given price on the screen.
      */
     private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
+        TextView priceTextView = (TextView) findViewById(R.id.order_summary_text_view);
         priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
     }
 
@@ -74,8 +78,34 @@ public class MainActivity extends ActionBarActivity {
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
     }
+
+    /**
+     * Calculates the price of the order.
+     *
+     * @param quantity is the number of cups of coffee ordered
+     * @param price    is the price of each coffee
+     * @return price x quantity
+     */
+    private int calculatePrice(int quantity, int price) {
+        return price * quantity;
+    }
+
+
+    /**
+     * Calculates the price of the order.
+     *
+     * @param quantity   is the number of cups of coffee ordered
+     * @param totalPrice is the total price quantity x price
+     * @return message
+     */
+
+    private String createOrderSummary(int quantity, int totalPrice) {
+        String priceMessage = "Name: Marcos \nQuantity:" + quantity + "\nTotal:$" + totalPrice + "\nThank you!!";
+        return priceMessage;
+    }
+
 
 }
